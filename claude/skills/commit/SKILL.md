@@ -1,37 +1,34 @@
 ---
 name: commit
-description: Stage and commit the current changes using Conventional Commits format. Use when the user asks to commit, create a commit, or write a commit message. Prefers git MCP tools when available.
+description: Describe the current jj change(s) with a Conventional Commits message. Use when the user asks to commit, describe a change, or write a commit message.
 disable-model-invocation: true
-allowed-tools: Bash(git diff*) Bash(git log*) Bash(git status*) Bash(git commit*) Bash(git push*) mcp__git__git_diff_staged mcp__git__git_status mcp__git__git_commit mcp__git__git_push
+allowed-tools: Bash(jj st*) Bash(jj status*) Bash(jj diff*) Bash(jj show*) Bash(jj log*) Bash(jj describe*) Bash(jj commit*)
 ---
 
 # Commit Skill
 
-Generate conventional commit messages from staged git changes and create the commit(s).
-
-## Tool preference
-
-Prefer git MCP tools (e.g. `mcp__git__*`) over Bash `git` commands whenever they are available in the session. Fall back to Bash only if the git MCP server is not connected.
+Write Conventional Commits messages for jj changes and apply them. Non-interactive jj forms are in the `jj` skill.
 
 ## Steps
 
-1. Get staged changes and working-tree status — use `mcp__git__git_diff_staged` and `mcp__git__git_status` if available, otherwise `git diff --cached` and `git status`.
-2. If nothing is staged, say so and stop — never stage files automatically.
-3. Analyze the staged changes:
-   - If the changes span multiple unrelated concerns, propose splitting them into separate commits and ask the user to confirm before proceeding.
-   - Otherwise, draft a single commit message.
+1. Inspect the change: `jj st` and `jj diff --git` (of `@`, or `-r <rev>` if the user named one). Check `jj log -r 'trunk()..@'` for the surrounding stack.
+2. If the change is empty, say so and stop.
+3. Analyze the diff:
+   - If it spans multiple unrelated concerns, propose splitting it into separate changes (`jj split <paths>`) and ask the user to confirm before proceeding.
+   - Otherwise, draft a single message.
 4. Follow Conventional Commits format:
    - `<type>(<optional scope>): <short description>`
    - Types: `feat`, `fix`, `refactor`, `docs`, `test`, `chore`, `style`, `perf`, `ci`, `build`
    - Subject line: short, descriptive, under 72 characters, imperative mood
    - Add a body only when the change genuinely needs more explanation
 5. Show the proposed message(s) to the user and ask for approval or edits.
-6. Once approved, create the commit — use `mcp__git__git_commit` if available, otherwise `git commit` via Bash with a HEREDOC for correct formatting.
-7. Push to remote immediately — use `mcp__git__git_push` if available, otherwise Bash `git push`.
+6. Once approved, apply it:
+   - `jj commit -m "..."` to finish `@` and start a new empty change on top (default when working in `@`), or
+   - `jj describe -r <rev> -m "..."` to (re)describe a specific change without moving `@`.
+   - Multi-line: `jj describe -m "$(printf 'feat: title\n\nBody')"`.
 
 ## Rules
 
-- Never use `git add -A` or `git add .`
-- Never skip hooks (`--no-verify`)
-- Never amend unless explicitly asked
-- Do not add co-author trailers
+- Never push or `jj upload` unless explicitly asked.
+- Never rewrite (`describe`, `squash`, `split`) changes other than the ones the user asked about.
+- Do not add co-author trailers.

@@ -11,7 +11,7 @@ hooks:
     - matcher: "Bash"
       hooks:
         - type: command
-          command: "$HOME/.claude/hooks/agents/verifier-bash-guard.sh"
+          command: "claude-verifier-guard"
 ---
 
 You are the **verifier**: you find out, with evidence, whether code works.

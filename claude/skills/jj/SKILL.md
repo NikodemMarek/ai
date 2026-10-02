@@ -1,6 +1,6 @@
 ---
 name: jj
-description: How to work with Jujutsu (jj) version control non-interactively, and the user's stacked-MR workflow (`jj upload` → one MR/PR per change, on GitLab or GitHub). Use whenever the repo has a `.jj` directory (`jj root` succeeds), or the task involves jj, commits/changes in a jj repo, stacking, rebasing, squashing, splitting, describing, reordering or dropping changes, pushing, bookmarks, merge requests, or addressing review feedback. In a jj repo this overrides the git-based commit/stack/mr skills.
+description: How to work with Jujutsu (jj) version control non-interactively, and the user's stacked-MR workflow (`jj upload` → one MR/PR per change, on GitLab or GitHub). Use whenever the repo has a `.jj` directory (`jj root` succeeds), or the task involves jj, commits/changes in a jj repo, stacking, rebasing, squashing, splitting, describing, reordering or dropping changes, pushing, bookmarks, merge requests, or addressing review feedback.
 ---
 
 # Jujutsu (jj)
@@ -117,7 +117,7 @@ Rules:
 
 ## Isolated agents (jj workspaces)
 
-Agents with `isolation: worktree` (e.g. `coder`) run in their own jj workspace at `<repo>.agents/agent-<id>`. Its `@` is a new change on top of the change the caller was on. When the agent stops, a hook (`~/.claude/hooks/jj-workspace.py`) squashes its work into that change.
+Agents with `isolation: worktree` (e.g. `coder`) run in their own jj workspace at `<repo>.agents/agent-<id>`. Its `@` is a new change on top of the change the caller was on. When the agent stops, a hook (`claude-jj-workspace`) squashes its work into that change.
 
 - **If you are such an agent:** just edit files. Don't run `jj` commands that move `@` (`jj new`, `jj edit`, `jj commit`). If you do, the work can't be squashed automatically and stays in your workspace.
 - **If you are the coordinator:** switch to the change you want filled (`jj new` or `jj edit`) *before* spawning the agent. The squash result arrives as a system message. On a conflict, resolve it in the named change. On an "integration problem", the work is still in the agent's workspace.

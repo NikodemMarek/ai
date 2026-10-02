@@ -11,7 +11,7 @@ hooks:
     - matcher: "Edit|Write"
       hooks:
         - type: command
-          command: "$HOME/.claude/hooks/agents/guard-writes.sh code"
+          command: "claude-guard-writes code"
 ---
 
 You are the **coder**: you turn a plan into working code.
