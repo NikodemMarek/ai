@@ -4,6 +4,17 @@
 {
   permissions = {
     allow = [
+      "Bash(jj log:*)"
+      "Bash(jj status:*)"
+      "Bash(jj show:*)"
+      "Bash(jj diff:*)"
+      "Bash(jj new:*)"
+      "Bash(jj squash:*)"
+      "Bash(jj split:*)"
+      "Bash(jj edit:*)"
+      "Bash(jj describe:*)"
+      "Bash(jj commit:*)"
+      "Bash(jj rebase:*)"
       "Bash(mvn test:*)"
       "Bash(mvn compile:*)"
     ];
