@@ -5,6 +5,8 @@
   jq,
   coreutils,
   git,
+  util-linux,
+  findutils,
   gnugrep,
   gnused,
   python3,
@@ -57,6 +59,8 @@ let
       jq
       coreutils
       git
+      util-linux
+      findutils
     ];
     bashOptions = [
       "nounset"
