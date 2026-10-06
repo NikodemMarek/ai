@@ -14,7 +14,7 @@
   instructions ? null,
   # name (without .md) -> path. null -> every .md in ../../claude/agents
   agents ? null,
-  # name -> directory path. null -> every directory in ../../claude/skills
+  # name -> directory path. null -> every directory in ../../skills (shared with other tools)
   skills ? null,
   # User settings as a Nix attrset, linked read-only to
   # $CLAUDE_CONFIG_DIR/settings.json. null -> ../../claude/settings.nix
@@ -33,8 +33,8 @@ let
     n: _: lib.nameValuePair (lib.removeSuffix ".md" n) (../../claude/agents + "/${n}")
   ) (mdEntries ../../claude/agents);
 
-  defaultSkills = lib.mapAttrs (n: _: ../../claude/skills + "/${n}") (
-    lib.filterAttrs (_: t: t == "directory") (builtins.readDir ../../claude/skills)
+  defaultSkills = lib.mapAttrs (n: _: ../../skills + "/${n}") (
+    lib.filterAttrs (_: t: t == "directory") (builtins.readDir ../../skills)
   );
 
   # attrsets recurse, lists concatenate (deduped), anything else: b wins

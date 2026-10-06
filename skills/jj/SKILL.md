@@ -115,14 +115,6 @@ Rules:
 - **After the bottom MR is merged:** run `jj sync`, then `jj upload` to retarget the rest of the stack.
 - **Don't push or upload on your own.** `jj upload`, `jj git push` and anything that touches the forge (GitLab/GitHub) is outward-facing. Do it only when the user explicitly asks (in coordinator mode: the coordinator does it, not subagents). `jj git fetch` and `jj upload -n` are safe.
 
-## Isolated agents (jj workspaces)
-
-Agents with `isolation: worktree` (e.g. `coder`) run in their own jj workspace at `<repo>.agents/agent-<id>`. Its `@` is a new change on top of the change the caller was on. When the agent stops, a hook (`claude-jj-workspace`) squashes its work into that change.
-
-- **If you are such an agent:** just edit files. Don't run `jj` commands that move `@` (`jj new`, `jj edit`, `jj commit`). If you do, the work can't be squashed automatically and stays in your workspace.
-- **If you are the coordinator:** switch to the change you want filled (`jj new` or `jj edit`) *before* spawning the agent. The squash result arrives as a system message. On a conflict, resolve it in the named change. On an "integration problem", the work is still in the agent's workspace.
-- **Housekeeping:** `jj workspace list` shows agent workspaces. Idle ones are deleted after a day.
-
 ## Finishing a task in a jj repo
 
 - Leave every change you made described. If you were working in `@`, either `jj commit -m ...` or `jj describe -m ...`.

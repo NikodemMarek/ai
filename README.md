@@ -6,7 +6,7 @@ Nix flake that builds a wrapped `claude` (Claude Code) with the whole config bun
 nix run .#claude                                  # try it
 ```
 
-Packages: `claude`, `claude-hooks`, `claude-statusline`, `jj-upload`.
+Packages: `claude`, `claude-hooks`, `claude-statusline`, `jj-upload`, `agent-skills`.
 
 ## Installing
 
@@ -33,20 +33,31 @@ Add this repo as an input of your system / home-manager flake and use the overla
 
 ## Layout
 
-- `claude/` - `CLAUDE.md`, `agents/*.md`, `skills/*/`, `settings.nix` (rendered to `settings.json`)
-- `pkgs/` - `claude` (the wrapper), `claude-hooks`, `claude-statusline`, `jj-upload`
+- `skills/` - `*/SKILL.md`, tool-agnostic skills shared by Claude and other tools
+- `claude/` - `CLAUDE.md`, `agents/*.md`, `settings.nix` (rendered to `settings.json`), `permissions.nix` (imported by `settings.nix`)
+- `pkgs/` - `claude` (the wrapper), `claude-hooks`, `claude-statusline`, `jj-upload`, `agent-skills`
 - `nix/overlay.nix` - overlay exposing all of the above
 
 `@memoryDir@` and `@dataDir@` in the markdown files and the settings are substituted at build time.
 
 ## Settings
 
-`claude/settings.nix` (permissions, hooks, statusLine, plugins, marketplaces, `effortLevel`, `theme`, ...) is rendered to JSON in the store and `$CLAUDE_CONFIG_DIR/settings.json` is a **read-only** symlink to it.
+`claude/settings.nix` (hooks, statusLine, plugins, marketplaces, `effortLevel`, `theme`, ...; `permissions` live in `claude/permissions.nix`) is rendered to JSON in the store and `$CLAUDE_CONFIG_DIR/settings.json` is a **read-only** symlink to it.
 
 - In-session changes (`/theme`, `/config`, `/plugin`, "don't ask again" permission answers) apply only to the current session and are not persisted.
-- To persist a change, edit `claude/settings.nix`, or use `extend { settings = ...; }` in an overlay / separate flake (see below).
+- To persist a change, edit `claude/settings.nix` (or `claude/permissions.nix`), or use `extend { settings = ...; }` in an overlay / separate flake (see below).
 - Project `.claude/settings.json` and `.claude/settings.local.json` work as usual.
 - An existing real `settings.json` (or a symlink not managed by Nix) is moved to `$CLAUDE_CONFIG_DIR/backups/settings.json.<YYYYmmdd-HHMMSS>` on first launch (a one-line notice is printed) and replaced by the link.
+
+## Other tools
+
+`agent-skills` holds the shared skills (`skills/`) in the Agent Skills `SKILL.md` format: `$out/<name>/SKILL.md`. Link its entries into the skills directory of OpenCode (`~/.config/opencode/skills/`) or Antigravity, e.g. with home-manager:
+
+```nix
+xdg.configFile."opencode/skills".source = "${pkgs.agent-skills}";
+```
+
+Claude-only frontmatter (`allowed-tools`, and `disable-model-invocation` in `commit`) is ignored by other tools.
 
 ## Data dir
 

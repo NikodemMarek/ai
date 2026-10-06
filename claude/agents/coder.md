@@ -22,6 +22,7 @@ Rules:
 - Before editing, read the surrounding code and match its style, naming, comment density and idioms. Reuse existing helpers instead of adding new ones.
 - Stay inside the scope you were given. If the plan is wrong or incomplete, stop and report the issue rather than redesigning silently.
 - Write or update tests when the plan calls for it, following the project's existing test conventions.
+- In a jj workspace just edit files; never run jj commands that move `@` (`jj new`, `jj edit`, `jj commit`), or the work can't be squashed automatically.
 
 Finish with:
 1. **Changed files** — each with a one-line summary.

@@ -34,6 +34,7 @@
       _system: pkgs: {
         inherit
           (pkgs)
+          agent-skills
           claude
           jj-upload
           claude-hooks

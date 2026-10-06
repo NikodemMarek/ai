@@ -2,26 +2,7 @@
 # store). In-session changes (/config, /theme, /plugin, ...) last only for the
 # session; change this file or `claude.extend { settings = ...; }` to persist.
 {
-  permissions = {
-    allow = [
-      "Bash(jj log:*)"
-      "Bash(jj status:*)"
-      "Bash(jj show:*)"
-      "Bash(jj diff:*)"
-      "Bash(jj new:*)"
-      "Bash(jj squash:*)"
-      "Bash(jj split:*)"
-      "Bash(jj edit:*)"
-      "Bash(jj describe:*)"
-      "Bash(jj commit:*)"
-      "Bash(jj rebase:*)"
-      "Bash(mvn test:*)"
-      "Bash(mvn compile:*)"
-    ];
-    deny = [ ];
-    ask = [ ];
-    additionalDirectories = [ "@memoryDir@" ];
-  };
+  permissions = import ./permissions.nix;
 
   statusLine = {
     type = "command";
