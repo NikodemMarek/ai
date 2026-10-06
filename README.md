@@ -84,7 +84,7 @@ Managed entries are symlinks refreshed on every launch; stale ones from older bu
 2. `mv ~/.claude ~/.local/share/claude`
 3. `mv ~/.claude.json ~/.local/share/claude/.claude.json`
 4. Remove the old symlinks into this repo (e.g. `CLAUDE.md`, `agents/*`, `skills/*`, `settings.json`, hook scripts under `~/.local/share/claude`).
-5. `mv ~/projects/ai/projects ~/.local/share/claude/memory`
+5. The old memory repo must become the memory dir itself, not a subdirectory of it. Before the first launch: `mv ~/projects/ai/projects ~/.local/share/claude/memory`. If the wrapper already created `memory/`: `rm -rf ~/.local/share/claude/memory/.git && mv ~/projects/ai/projects/* ~/projects/ai/projects/.git ~/.local/share/claude/memory/`.
 6. Add `claude` and `jj-upload` to your flake (see Installing) and rebuild.
 7. Add the jj alias below.
 

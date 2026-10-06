@@ -7,6 +7,7 @@
   writeText,
   writeShellScript,
   coreutils,
+  findutils,
   claude-hooks,
   claude-statusline,
   jj-upload,
@@ -191,6 +192,11 @@ let
           ${coreutils}/bin/mkdir -p "$CLAUDE_CONFIG_DIR/agents" "$CLAUDE_CONFIG_DIR/skills" "$CLAUDE_MEMORY_DIR"
           if [ ! -e "$CLAUDE_MEMORY_DIR/.git" ] && command -v git >/dev/null 2>&1; then
             git -C "$CLAUDE_MEMORY_DIR" init -q >/dev/null 2>&1
+          fi
+          local nested
+          nested="$(${findutils}/bin/find "$CLAUDE_MEMORY_DIR" -mindepth 2 -maxdepth 3 -name .git -print -quit 2>/dev/null)"
+          if [ -n "$nested" ]; then
+            echo "claude: $CLAUDE_MEMORY_DIR contains a nested git repository ($nested); memory commits miss files below it" >&2
           fi
           __claude_adopt_settings
           ${lib.concatMapStringsSep "\n" (
