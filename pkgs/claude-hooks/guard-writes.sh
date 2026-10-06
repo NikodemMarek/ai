@@ -34,7 +34,7 @@ for p in "$HOME/.claude" "$CFG" "$HOME/.ssh" "$HOME/.gnupg" "$HOME/.config" "$HO
   under "$p" && deny "Path $abs is protected (config/secrets/architect memory)."
 done
 # The AI config repo is editable only by agents working inside it
-AI="$HOME/projects/ai/ai"
+AI="$HOME/projects/ai"
 case "$(realpath -m -- "$cwd")/" in "$(realpath -m -- "$AI")"/*) ;; *) under "$AI" && deny "Path $abs is protected (AI config repo)." ;; esac
 # Top-level dotfiles in $HOME (.bashrc, .profile, ...)
 [ "$(dirname -- "$abs")" = "$HOME" ] && case "$(basename -- "$abs")" in .*) deny "Home dotfiles are protected." ;; esac
