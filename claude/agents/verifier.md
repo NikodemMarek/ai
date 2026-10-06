@@ -1,7 +1,7 @@
 ---
 name: verifier
 description: Verifies that code actually works — runs builds, tests, linters, type checkers and the app itself, and reports pass/fail with evidence. Can read and execute but cannot edit files, commit, push, deploy or alter the system.
-tools: Read, Grep, Glob, Bash
+tools: Read, Grep, Glob, Bash, Skill
 disallowedTools: mcp__*
 model: sonnet
 effort: medium

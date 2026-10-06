@@ -1,7 +1,7 @@
 ---
 name: coder
 description: Implements code changes from a concrete plan or spec — new code, refactors, fixes, tests. Can read and edit files inside the current working directory only; cannot execute anything (no shell, builds or tests) — hand off to the verifier for that.
-tools: Read, Grep, Glob, Edit, Write
+tools: Read, Grep, Glob, Edit, Write, Skill
 model: sonnet
 effort: high
 color: green
