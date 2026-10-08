@@ -343,7 +343,7 @@ def make_forge(remote):
 
 
 def stack_section(entries, current, term):
-    lines = [STACK_START, "", "**Stack** (managed by `jj upload`, bottom first):", ""]
+    lines = [STACK_START, "", "**Stack**:", ""]
     for e in entries:
         mark = f" 👈 this {term}" if e["branch"] == current else ""
         lines.append(f"- {e['mr']['ref']}{mark}")
