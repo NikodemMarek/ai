@@ -43,6 +43,16 @@
     "Bash(knowledge submit:*)"
     "Bash(knowledge status:*)"
 
+    # Draft MR reviews (dotfiles' gitlab-review), on any MR glab has a token
+    # for: submit creates draft notes, which only the user publishes, and
+    # replaces this tool's earlier drafts the user has not edited (never the
+    # user's own or edited ones). Not `discard`: deleting drafts without a new
+    # review stays the user's call.
+    "Bash(gitlab-review submit:*)"
+    "Bash(gitlab-review guide:*)"
+    "Bash(gitlab-review plan:*)"
+    "Bash(gitlab-review status:*)"
+
     "Bash(mvn test:*)"
     "Bash(mvn compile:*)"
   ];
