@@ -12,7 +12,7 @@ description: Submit code-review findings on a GitLab merge request as a DRAFT re
 3. Submit: `gitlab-review submit --mr <MR url> <<'EOF'` with the review JSON, then `EOF`. Use a quoted heredoc and don't write files into the workspace. It waits for the result and prints it, including comments that could not be placed inline and why.
 
 Rules:
-- One finding per comment, on the line it is about, with its severity, written as the final text a human reviewer would post. Add a short summary.
+- Word every comment, reply and the summary as the `review-comments` skill says (load it first): Polish unless the author writes in English, one short finding per comment on the line it is about, suggestions where they fit, plus a short summary.
 - Don't repeat points already raised in the existing threads; reply to a thread instead (by its id).
 - Re-submitting replaces this tool's earlier drafts that the user has not edited, so submit the complete review each time.
 - Exit code 3 means the result isn't in yet: check later with `gitlab-review status <id>`.
