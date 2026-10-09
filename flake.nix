@@ -39,6 +39,7 @@
           jj-upload
           claude-hooks
           claude-statusline
+          knowledge
           ;
         default = pkgs.claude;
       }
